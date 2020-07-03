@@ -24,6 +24,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="EffectMgr.cpp" />
+    <ClCompile Include="GameMgr.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="NumofPlayerScene.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="EffectMgr.h" />
+    <ClInclude Include="GameMgr.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="NumofPlayerScene.h" />
