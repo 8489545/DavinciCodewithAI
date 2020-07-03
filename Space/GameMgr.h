@@ -5,6 +5,8 @@ public:
 	GameMgr();
 	~GameMgr();
 
+	int m_NumOfPlayer;
+
 	void Init();
 	void Release();
 };
