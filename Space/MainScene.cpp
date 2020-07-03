@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MainScene.h"
-#include"Player.h"
+#include"NumofPlayerScene.h"
 
 MainScene::MainScene()
 {
@@ -38,6 +38,11 @@ void MainScene::Update(float deltaTime, float time)
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_Start))
 	{
 		m_Start->SetScale(1.25f, 1.25f);
+
+		if (INPUT->GetButtonDown())
+		{
+			SceneDirector::GetInst()->ChangeScene(new NumofPlayerScene());
+		}
 	}
 	else
 	{
