@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "NumofPlayerScene.h"
+#include"GameScene.h"
 
 NumofPlayerScene::NumofPlayerScene()
 {
@@ -22,6 +23,9 @@ void NumofPlayerScene::Init()
 
 	m_FourPlayer = Sprite::Create(L"Painting/NumofPlayer/FourPlayer.png");
 	m_FourPlayer->SetPosition(1920 / 2, 700);
+
+	m_EnterButton = Sprite::Create(L"Painting/NumofPlayer/Enter.png");
+	m_EnterButton->SetPosition(1700, 900);
 
 	m_NumOfPlayer = 0;
 	INPUT->ButtonDown(false);
@@ -66,6 +70,13 @@ void NumofPlayerScene::Update(float deltaTime, float Time)
 		if (m_NumOfPlayer != 4)
 			m_FourPlayer->B = 255;
 	}
+	if (m_NumOfPlayer > 0)
+	{
+		if (CollisionMgr::GetInst()->MouseWithBoxSize(m_EnterButton) && INPUT->GetButtonDown())
+		{
+			SceneDirector::GetInst()->ChangeScene(new GameScene());
+		}
+	}
 	GameMgr::GetInst()->m_NumOfPlayer = m_NumOfPlayer;
 }
 
@@ -75,4 +86,7 @@ void NumofPlayerScene::Render()
 	m_TwoPlayer->Render();
 	m_ThreePlayer->Render();
 	m_FourPlayer->Render();
+
+	if(m_NumOfPlayer > 0)
+		m_EnterButton->Render();
 }

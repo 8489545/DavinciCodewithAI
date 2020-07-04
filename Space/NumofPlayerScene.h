@@ -5,6 +5,8 @@ class NumofPlayerScene : public Scene
 	Sprite* m_TwoPlayer;
 	Sprite* m_ThreePlayer;
 	Sprite* m_FourPlayer;
+
+	Sprite* m_EnterButton;
 public:
 	NumofPlayerScene();
 	~NumofPlayerScene();
