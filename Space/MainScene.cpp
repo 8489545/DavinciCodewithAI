@@ -42,6 +42,7 @@ void MainScene::Update(float deltaTime, float time)
 		if (INPUT->GetButtonDown())
 		{
 			SceneDirector::GetInst()->ChangeScene(new NumofPlayerScene());
+			return;
 		}
 	}
 	else
@@ -64,6 +65,7 @@ void MainScene::Update(float deltaTime, float time)
 	{
 		m_Exit->SetScale(1.f, 1.f);
 	}
+
 }
 
 void MainScene::Render()
