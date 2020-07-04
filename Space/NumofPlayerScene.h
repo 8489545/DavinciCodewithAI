@@ -9,6 +9,8 @@ public:
 	NumofPlayerScene();
 	~NumofPlayerScene();
 
+	int m_NumOfPlayer;
+
 	void Init();
 	void Release();
 

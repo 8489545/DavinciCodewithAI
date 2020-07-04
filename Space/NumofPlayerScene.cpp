@@ -22,6 +22,9 @@ void NumofPlayerScene::Init()
 
 	m_FourPlayer = Sprite::Create(L"Painting/NumofPlayer/FourPlayer.png");
 	m_FourPlayer->SetPosition(1920 / 2, 700);
+
+	m_NumOfPlayer = 0;
+	INPUT->ButtonDown(false);
 }
 
 void NumofPlayerScene::Release()
@@ -30,6 +33,40 @@ void NumofPlayerScene::Release()
 
 void NumofPlayerScene::Update(float deltaTime, float Time)
 {
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_TwoPlayer))
+	{
+		m_TwoPlayer->B = 0;
+		if (INPUT->GetButtonDown())
+			m_NumOfPlayer = 2;
+	}
+	else
+	{
+		if (m_NumOfPlayer != 2)
+			m_TwoPlayer->B = 255;
+	}
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_ThreePlayer))
+	{
+		m_ThreePlayer->B = 0;
+		if (INPUT->GetButtonDown())
+			m_NumOfPlayer = 3;
+	}
+	else
+	{
+		if (m_NumOfPlayer != 3)
+			m_ThreePlayer->B = 255;
+	}
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_FourPlayer))
+	{
+		m_FourPlayer->B = 0;
+		if (INPUT->GetButtonDown())
+			m_NumOfPlayer = 4;
+	}
+	else
+	{
+		if (m_NumOfPlayer != 4)
+			m_FourPlayer->B = 255;
+	}
+	GameMgr::GetInst()->m_NumOfPlayer = m_NumOfPlayer;
 }
 
 void NumofPlayerScene::Render()
