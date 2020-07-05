@@ -1,0 +1,40 @@
+#include "stdafx.h"
+#include "Block.h"
+
+Block::Block(int num, bool front, float rotation, int owner, Color color,Vec2 pos)
+{
+	m_BlockNumber = num;
+	m_Front = front;
+	m_Owner = owner;
+	m_Color = color;
+
+	std::wstring colorstr;
+	if (m_Color == Color::BLACK)
+		colorstr = L"Black";
+	else if (m_Color == Color::WHITE)
+		colorstr = L"White";
+
+	m_Back = Sprite::Create(L"Painting/Block/Back_" + colorstr + L".png");
+
+	m_Block = Sprite::Create(L"Painting/Block/" + colorstr +std::to_wstring(num) + L".png");
+	m_Block->SetParent(this);
+	m_Position = pos;
+	m_Rotation = rotation;
+}
+
+Block::~Block()
+{
+}
+
+void Block::Update(float deltaTime, float Time)
+{
+	m_Back->m_Position = m_Position;
+	m_Back->m_Rotation = m_Rotation;
+}
+
+void Block::Render()
+{
+	m_Block->Render();
+	if(!m_Front)
+		m_Back->Render();
+}
