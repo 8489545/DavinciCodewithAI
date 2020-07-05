@@ -1,10 +1,4 @@
 #pragma once
-enum class Color
-{
-	WHITE,
-	BLACK,
-	NONE
-};
 class GameMgr : public Singleton<GameMgr>
 {
 public:
@@ -13,8 +7,12 @@ public:
 
 	int m_NumOfPlayer;
 
+	std::vector<Block*> m_AllBlock;
+
 	void Init();
 	void Release();
+
+	void BlockInitSetting();
 
 	void CreateBlock(int num, bool front, float rotation, int owner, Color color, Vec2 pos);
 };

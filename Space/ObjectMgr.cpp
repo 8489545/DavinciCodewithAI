@@ -83,6 +83,8 @@ void ObjectMgr::Render()
 
 void ObjectMgr::AddObject(Object* obj, const std::string tag)
 {
+	if (tag == "Block")
+		GameMgr::GetInst()->m_AllBlock.push_back((Block*)obj);
 	m_Objects.push_back(obj);
 	obj->SetTag(tag);
 }

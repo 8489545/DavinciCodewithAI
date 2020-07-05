@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GameMgr.h"
-#include"Block.h"
 
 GameMgr::GameMgr()
 {
@@ -16,6 +15,10 @@ void GameMgr::Init()
 }
 
 void GameMgr::Release()
+{
+}
+
+void GameMgr::BlockInitSetting()
 {
 }
 

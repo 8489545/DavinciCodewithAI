@@ -1,4 +1,10 @@
 #pragma once
+enum class Color
+{
+	WHITE,
+	BLACK,
+	NONE
+};
 class Block : public Object
 {
 	Sprite* m_Block;
