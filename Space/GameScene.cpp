@@ -15,6 +15,8 @@ void GameScene::Init()
 	m_BG->SetPosition(1920 / 2, 1080 / 2);
 	m_Table = Sprite::Create(L"Painting/Game/Table.png");
 	m_Table->SetPosition(1920 / 2, 1080 / 2);
+
+	GameMgr::GetInst()->BlockInitSetting();
 }
 
 void GameScene::Release()

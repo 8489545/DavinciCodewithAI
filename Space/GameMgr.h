@@ -1,4 +1,7 @@
 #pragma once
+#include<random>
+#include<iterator>
+#include<algorithm>
 class GameMgr : public Singleton<GameMgr>
 {
 public:
