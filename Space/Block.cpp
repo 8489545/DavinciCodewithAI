@@ -15,11 +15,13 @@ Block::Block(int num, bool front, float rotation, int owner, Color color,Vec2 po
 		colorstr = L"White";
 
 	m_Back = Sprite::Create(L"Painting/Block/Back_" + colorstr + L".png");
+	m_Active = Sprite::Create(L"Painting/Block/Active.png");
 
 	m_Block = Sprite::Create(L"Painting/Block/" + colorstr +std::to_wstring(num) + L".png");
 	m_Block->SetParent(this);
 	m_Position = pos;
 	m_Rotation = rotation;
+	m_ActiveBlock = false;
 }
 
 Block::~Block()
@@ -29,7 +31,17 @@ Block::~Block()
 void Block::Update(float deltaTime, float Time)
 {
 	m_Back->m_Position = m_Position;
+	m_Active->m_Position = m_Position;
 	m_Back->m_Rotation = m_Rotation;
+
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(this))
+	{
+		m_ActiveBlock = true;
+	}
+	else
+	{
+		m_ActiveBlock = false;
+	}
 }
 
 void Block::Render()
@@ -37,4 +49,6 @@ void Block::Render()
 	m_Block->Render();
 	if(!m_Front)
 		m_Back->Render();
+	if (m_ActiveBlock)
+		m_Active->Render();
 }

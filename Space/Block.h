@@ -9,6 +9,7 @@ class Block : public Object
 {
 	Sprite* m_Block;
 	Sprite* m_Back;
+	Sprite* m_Active;
 
 public:
 	Block(int num,bool front,float rotation,int owner,Color color,Vec2 pos);
@@ -16,6 +17,7 @@ public:
 
 	int m_BlockNumber;
 	bool m_Front;
+	bool m_ActiveBlock;
 	int m_Owner;
 	Color m_Color;
 
