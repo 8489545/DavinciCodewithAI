@@ -2,6 +2,8 @@
 #include<random>
 #include<iterator>
 #include<algorithm>
+#include<functional>
+
 enum class PHASE
 {
 	BlockDist,		//블록 분배
@@ -27,11 +29,23 @@ public:
 
 	std::vector<Block*> m_AllBlock;
 
+	std::vector<Block*> m_BlockPile;
+
+	std::vector<Block*> m_Player1Hand;
+	std::vector<Block*> m_Player2Hand;
+	std::vector<Block*> m_Player3Hand;
+	std::vector<Block*> m_Player4Hand;
+
+	Block* m_ActiveBlock;
+
 	void Init();
 	void Release();
 
+	void Update();
+
 	void BlockInitSetting();
-
 	void CreateBlock(int num, bool front, float rotation, int owner, Color color, Vec2 pos);
-};
+	void BlockInHand(int playernum, Block* block);
 
+	void BlockHandSetting();
+};

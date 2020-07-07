@@ -27,6 +27,7 @@ void SceneDirector::Update(float deltaTime, float time)
 {
 	Camera::GetInst()->Update(deltaTime, time);
 	Input::GetInst()->Update();
+	GameMgr::GetInst()->Update();
 	ObjMgr->Update(deltaTime, time);
 
 	if (m_CurrentScene)
