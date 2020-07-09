@@ -11,7 +11,8 @@ GameMgr::~GameMgr()
 
 void GameMgr::Init()
 {
-	m_NumOfPlayer = 1;
+	m_NumOfPlayer = 0;
+	m_Turn = 1;
 }
 
 void GameMgr::Release()
@@ -20,9 +21,26 @@ void GameMgr::Release()
 
 void GameMgr::Update()
 {
-	
-	if(m_Player1Hand.size() > 0)
-		BlockHandSetting();
+	BlockHandSetting();
+}
+
+Player* GameMgr::GetPlayer(int num)
+{
+	return m_Players.at(num);
+}
+
+void GameMgr::PlayerNumSetting(int num)
+{
+	for (int i = 0; i < num; i++)
+	{
+		m_Players.push_back(new Player());
+
+		if (i != 1)
+			m_Players.at(i)->SetPlayer(i + 1, true);
+		else if (i == 1)
+			m_Players.at(i)->SetPlayer(i + 1, false);
+	}
+	m_NumOfPlayer = num;
 }
 
 void GameMgr::BlockInitSetting()
@@ -60,40 +78,39 @@ void GameMgr::CreateBlock(int num, bool front, float rotation, int owner, Color 
 
 void GameMgr::BlockInHand(int playernum,Block* block)
 {
-	switch (playernum)
-	{
-	case 1:
-		m_Player1Hand.push_back(block);
-		std::sort(m_Player1Hand.begin(), m_Player1Hand.end(), [](const Block* a, const Block* b) 
+	GetPlayer(playernum - 1)->m_Hand.push_back(block);
+	std::sort(GetPlayer(playernum - 1)->m_Hand.begin(), GetPlayer(playernum - 1)->m_Hand.end(), [](const Block* a, const Block* b)
+		{
+			if (a->m_BlockNumber == b->m_BlockNumber)
 			{
-				if (a->m_BlockNumber == b->m_BlockNumber)
-				{
-					if (b->m_Color == Color::BLACK)
-						return a->m_BlockNumber < b->m_BlockNumber;
-				}
-				else
-				{
+				if (b->m_Color == Color::BLACK)
 					return a->m_BlockNumber < b->m_BlockNumber;
-				}
-			});
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	default:
-		break;
-	}
+			}
+			else
+			{
+				return a->m_BlockNumber < b->m_BlockNumber;
+			}
+		});
+	NextTurn();
 }
-
 void GameMgr::BlockHandSetting()
 {
 	Vec2 Pos = Vec2(600, 900);
-	for (auto& iter : m_Player1Hand)
+
+	for (int i = 0; i < m_NumOfPlayer; i++)
 	{
-		Pos.x += 100;
-		iter->SetPosition(Pos.x, Pos.y);
+		for (auto& iter : GetPlayer(i)->m_Hand)
+		{
+			Pos.x += 100;
+			iter->SetPosition(Pos.x, Pos.y);
+		}
 	}
+}
+
+void GameMgr::NextTurn()
+{
+	if (m_Turn == m_NumOfPlayer)
+		m_Turn = 1;
+	else
+		m_Turn += 1;
 }

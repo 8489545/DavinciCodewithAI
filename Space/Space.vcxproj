@@ -32,6 +32,7 @@
     <ClCompile Include="NumofPlayerScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectMgr.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="NumofPlayerScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectMgr.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="Scene.h" />

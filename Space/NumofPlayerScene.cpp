@@ -74,10 +74,10 @@ void NumofPlayerScene::Update(float deltaTime, float Time)
 	{
 		if (CollisionMgr::GetInst()->MouseWithBoxSize(m_EnterButton) && INPUT->GetButtonDown())
 		{
+			GameMgr::GetInst()->PlayerNumSetting(m_NumOfPlayer);
 			SceneDirector::GetInst()->ChangeScene(new GameScene());
 		}
 	}
-	GameMgr::GetInst()->m_NumOfPlayer = m_NumOfPlayer;
 }
 
 void NumofPlayerScene::Render()

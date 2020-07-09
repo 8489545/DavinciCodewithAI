@@ -41,6 +41,7 @@ inline void SafeDelete(T*& x);
 #include"Animation.h"
 #include"EffectMgr.h"
 #include"Block.h"
+#include"Player.h"
 #include"GameMgr.h"
 //
 
