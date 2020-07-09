@@ -35,7 +35,7 @@ void GameScene::BlockDist()
 	{
 		if ((GameMgr::GetInst()->m_NumOfPlayer == 2 || GameMgr::GetInst()->m_NumOfPlayer == 3))
 		{
-			auto& iter = GameMgr::GetInst()->m_Players.at(GameMgr::GetInst()->m_NumOfPlayer - 1);
+			auto& iter = GameMgr::GetInst()->m_Players.at(GameMgr::GetInst()->m_NumOfPlayer - (_int64)1);
 			if (iter->m_Hand.size() < 4)
 			{
 				for (auto& iter : GameMgr::GetInst()->m_Players)
