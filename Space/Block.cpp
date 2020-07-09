@@ -38,7 +38,7 @@ void Block::Update(float deltaTime, float Time)
 	{
 		m_ActiveBlock = true;
 
-		if (INPUT->GetButtonDown() && m_Owner == 0)
+		if (INPUT->GetButtonDown() && m_Owner == 0 && (GameMgr::GetInst()->m_GamePhase == PHASE::BlockDist && GameMgr::GetInst()->m_Turn == 1))
 		{
 			m_Owner = 1;
 			GameMgr::GetInst()->BlockInHand(1,this);
