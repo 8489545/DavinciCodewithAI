@@ -15,6 +15,23 @@ void Player::SetPlayer(int num, bool ai)
 	m_isAI = ai;
 }
 
+void Player::BlockInHand()
+{
+	if (GameMgr::GetInst()->m_Turn == m_PlayerNum)
+	{
+		if (m_isAI)
+			GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetRandomBlock());
+		else
+		{
+			if (INPUT->GetButtonDown() && GameMgr::GetInst()->GetActiveBlock(2) != nullptr)
+			{
+				INPUT->ButtonDown(false);
+				GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetActiveBlock(2));
+			}
+		}
+	}
+}
+
 void Player::Update(float deltaTime, float Time)
 {
 }

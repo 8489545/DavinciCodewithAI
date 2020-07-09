@@ -33,16 +33,11 @@ void Block::Update(float deltaTime, float Time)
 	m_Back->m_Position = m_Position;
 	m_Active->m_Position = m_Position;
 	m_Back->m_Rotation = m_Rotation;
+	m_Active->m_Rotation = m_Rotation;
 
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(this))
 	{
 		m_ActiveBlock = true;
-
-		if (INPUT->GetButtonDown() && m_Owner == 0 && (GameMgr::GetInst()->m_GamePhase == PHASE::BlockDist && GameMgr::GetInst()->m_Turn == 1))
-		{
-			m_Owner = 1;
-			GameMgr::GetInst()->BlockInHand(1,this);
-		}
 	}
 	else
 	{

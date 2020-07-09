@@ -21,6 +21,8 @@ void GameScene::Init()
 
 	GameMgr::GetInst()->BlockInitSetting();
 	GameMgr::GetInst()->SetGamePhase(PHASE::BlockDist);
+
+	m_DistBlockNum = 0;
 }
 
 void GameScene::Release()
@@ -29,6 +31,20 @@ void GameScene::Release()
 
 void GameScene::BlockDist()
 {
+	if (GameMgr::GetInst()->m_BlockPile.size() > 0)
+	{
+		if ((GameMgr::GetInst()->m_NumOfPlayer == 2 || GameMgr::GetInst()->m_NumOfPlayer == 3))
+		{
+			auto& iter = GameMgr::GetInst()->m_Players.at(GameMgr::GetInst()->m_NumOfPlayer - 1);
+			if (iter->m_Hand.size() < 4)
+			{
+				for (auto& iter : GameMgr::GetInst()->m_Players)
+				{
+					iter->BlockInHand();
+				}
+			}
+		}
+	}
 }
 
 void GameScene::Update(float deltaTime, float Time)

@@ -40,6 +40,8 @@ public:
 	void Update();
 
 	Player* GetPlayer(int num);
+	Block* GetRandomBlock();
+	Block* GetActiveBlock(int num);
 
 	void PlayerNumSetting(int num);
 	void BlockInitSetting();

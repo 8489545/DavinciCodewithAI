@@ -9,6 +9,8 @@ public:
 	GameScene();
 	~GameScene();
 
+	int m_DistBlockNum;
+
 	void Init();
 	void Release(); 
 

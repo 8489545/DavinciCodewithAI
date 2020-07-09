@@ -29,15 +29,51 @@ Player* GameMgr::GetPlayer(int num)
 	return m_Players.at(num);
 }
 
+Block* GameMgr::GetRandomBlock()
+{
+	int num;
+	if (m_BlockPile.size() > 0)
+	{
+		num = (rand() % m_BlockPile.size());
+		return m_BlockPile.at(num);
+	}
+	return nullptr;
+}
+
+Block* GameMgr::GetActiveBlock(int num)
+{
+	if (num == 1)
+	{
+		for (auto& iter : m_AllBlock)
+		{
+			if (CollisionMgr::GetInst()->MouseWithBoxSize(iter))
+			{
+				return iter;
+			}
+		}
+	}
+	else if (num == 2)
+	{
+		for (auto& iter : m_BlockPile)
+		{
+			if (CollisionMgr::GetInst()->MouseWithBoxSize(iter))
+			{
+				return iter;
+			}
+		}
+	}
+	return nullptr;
+}
+
 void GameMgr::PlayerNumSetting(int num)
 {
 	for (int i = 0; i < num; i++)
 	{
 		m_Players.push_back(new Player());
 
-		if (i != 1)
+		if (i != 0)
 			m_Players.at(i)->SetPlayer(i + 1, true);
-		else if (i == 1)
+		else if (i == 0)
 			m_Players.at(i)->SetPlayer(i + 1, false);
 	}
 	m_NumOfPlayer = num;
@@ -97,13 +133,22 @@ void GameMgr::BlockInHand(int playernum,Block* block)
 }
 void GameMgr::BlockHandSetting()
 {
-	Vec2 Pos = Vec2(600, 900);
-
 	for (int i = 0; i < m_NumOfPlayer; i++)
 	{
+		Vec2 Pos;
+		if (i == 0)
+			Pos = Vec2(600, 900);
+		else if (i == 1)
+			Pos = Vec2(1700, 700);
 		for (auto& iter : GetPlayer(i)->m_Hand)
 		{
-			Pos.x += 100;
+			if (i == 0)
+				Pos.x += 100;
+			else if (i == 1)
+			{
+				iter->m_Rotation = D3DXToRadian(-90);
+				Pos.y -= 100;
+			}
 			iter->SetPosition(Pos.x, Pos.y);
 		}
 	}
