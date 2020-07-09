@@ -47,6 +47,7 @@ public:
 	void BlockInHand(int playernum, Block* block);
 
 	void BlockHandSetting();
+	void BlockPileSetting();
 
 	void NextTurn();
 };

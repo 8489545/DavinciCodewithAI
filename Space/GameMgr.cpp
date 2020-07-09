@@ -79,6 +79,7 @@ void GameMgr::CreateBlock(int num, bool front, float rotation, int owner, Color 
 void GameMgr::BlockInHand(int playernum,Block* block)
 {
 	GetPlayer(playernum - 1)->m_Hand.push_back(block);
+	m_BlockPile.erase(std::remove(m_BlockPile.begin(), m_BlockPile.end(), block), m_BlockPile.end());
 	std::sort(GetPlayer(playernum - 1)->m_Hand.begin(), GetPlayer(playernum - 1)->m_Hand.end(), [](const Block* a, const Block* b)
 		{
 			if (a->m_BlockNumber == b->m_BlockNumber)
@@ -91,6 +92,7 @@ void GameMgr::BlockInHand(int playernum,Block* block)
 				return a->m_BlockNumber < b->m_BlockNumber;
 			}
 		});
+	BlockPileSetting();
 	NextTurn();
 }
 void GameMgr::BlockHandSetting()
@@ -103,6 +105,23 @@ void GameMgr::BlockHandSetting()
 		{
 			Pos.x += 100;
 			iter->SetPosition(Pos.x, Pos.y);
+		}
+	}
+}
+
+void GameMgr::BlockPileSetting()
+{
+	int x = 400;
+	int y = 1080 / 2 - 100;
+	for (auto& iter : m_BlockPile)
+	{
+		x += 100;
+		iter->SetPosition(x, y);
+
+		if (x >= 1400)
+		{
+			x = 400;
+			y += 150;
 		}
 	}
 }
