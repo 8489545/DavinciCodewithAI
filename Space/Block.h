@@ -19,6 +19,7 @@ public:
 	bool m_Front;
 	bool m_ActiveBlock;
 	int m_Owner;
+	int m_HandNum;
 	Color m_Color;
 
 	void Update(float deltaTime, float Time);

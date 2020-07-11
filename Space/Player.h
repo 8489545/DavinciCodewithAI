@@ -13,6 +13,7 @@ public:
 	void SetPlayer(int num, bool ai);
 
 	void BlockInHand();
+	void MoveJoker();
 
 	void Update(float deltaTime,float Time);
 	void Render();

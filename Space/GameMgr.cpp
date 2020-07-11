@@ -114,6 +114,7 @@ void GameMgr::CreateBlock(int num, bool front, float rotation, int owner, Color 
 
 void GameMgr::BlockInHand(int playernum,Block* block)
 {
+	block->m_Owner = playernum;
 	GetPlayer(playernum - 1)->m_Hand.push_back(block);
 	m_BlockPile.erase(std::remove(m_BlockPile.begin(), m_BlockPile.end(), block), m_BlockPile.end());
 	std::sort(GetPlayer(playernum - 1)->m_Hand.begin(), GetPlayer(playernum - 1)->m_Hand.end(), [](const Block* a, const Block* b)
@@ -133,6 +134,7 @@ void GameMgr::BlockInHand(int playernum,Block* block)
 }
 void GameMgr::BlockHandSetting()
 {
+	int handnum = 0;
 	for (int i = 0; i < m_NumOfPlayer; i++)
 	{
 		Vec2 Pos;
@@ -143,13 +145,18 @@ void GameMgr::BlockHandSetting()
 		for (auto& iter : GetPlayer(i)->m_Hand)
 		{
 			if (i == 0)
+			{
 				Pos.x += 100;
+			} 
 			else if (i == 1)
 			{
 				iter->m_Rotation = D3DXToRadian(-90);
 				Pos.y -= 100;
 			}
+			iter->m_HandNum = handnum;
 			iter->SetPosition(Pos.x, Pos.y);
+			
+			handnum += 1;
 		}
 	}
 }
@@ -158,6 +165,7 @@ void GameMgr::BlockPileSetting()
 {
 	int x = 400;
 	int y = 1080 / 2 - 100;
+
 	for (auto& iter : m_BlockPile)
 	{
 		x += 100;
@@ -167,6 +175,44 @@ void GameMgr::BlockPileSetting()
 		{
 			x = 400;
 			y += 150;
+		}
+	}
+}
+
+void GameMgr::MoveJoker(int owner)
+{
+	auto iter = std::find_if(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), [](Block* b)
+		{
+			if (b->m_BlockNumber == 12)
+				return true;
+			else
+				return false;
+		});	
+
+	for (auto iter2 = GetPlayer(owner - 1)->m_Hand.begin(); iter2 != GetPlayer(owner - 1)->m_Hand.end();iter2++)
+	{
+		if (iter == iter2)
+			break;
+	}
+	GetPlayer(owner - 1)->m_Hand.erase(std::remove(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), *iter), GetPlayer(owner - 1)->m_Hand.end());
+
+	for (auto& iter : m_AllBlock)
+	{
+		if (iter->m_Owner == owner && iter->m_BlockNumber == 12)
+		{
+			if (iter->m_HandNum + (_int64)1 > GetPlayer(owner - 1)->m_Hand.size())
+			{
+				iter->m_HandNum = 0;
+			}
+			else
+			{
+				iter->m_HandNum += 1;
+			}
+			for (auto& iter : GetPlayer(owner - 1)->m_Hand)
+			{
+				iter->m_HandNum += 1;
+			}
+			GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + iter->m_HandNum, iter);
 		}
 	}
 }

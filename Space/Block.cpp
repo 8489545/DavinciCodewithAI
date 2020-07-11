@@ -22,6 +22,8 @@ Block::Block(int num, bool front, float rotation, int owner, Color color,Vec2 po
 	m_Position = pos;
 	m_Rotation = rotation;
 	m_ActiveBlock = false;
+
+	m_HandNum = 0;
 }
 
 Block::~Block()

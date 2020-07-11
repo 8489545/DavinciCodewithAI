@@ -15,6 +15,8 @@ public:
 	void Release(); 
 
 	void BlockDist();
+	void SetJokerPos();
+	void BlockFit();
 
 	void Update(float deltaTime, float Time);
 	void Render();

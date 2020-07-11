@@ -43,8 +43,25 @@ void GameScene::BlockDist()
 					iter->BlockInHand();
 				}
 			}
+			else
+			{
+				GameMgr::GetInst()->SetGamePhase(PHASE::SetJokerPos);
+			}
 		}
 	}
+}
+
+void GameScene::SetJokerPos()
+{
+	for (auto& iter : GameMgr::GetInst()->m_Players)
+	{
+		iter->MoveJoker();
+	}
+}
+
+void GameScene::BlockFit()
+{
+
 }
 
 void GameScene::Update(float deltaTime, float Time)
@@ -52,6 +69,10 @@ void GameScene::Update(float deltaTime, float Time)
 	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
 	{
 		BlockDist();
+	}
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos)
+	{
+		SetJokerPos();
 	}
 }
 

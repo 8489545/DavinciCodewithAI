@@ -7,6 +7,7 @@
 enum class PHASE
 {
 	BlockDist,		//블록 분배
+	SetJokerPos,	//조커 위치 정하기
 	SetOrder,		//순서 정하기
 	ImportBlock,	//블록 가져오기
 	BlockFit,		//블록 맞추기
@@ -50,6 +51,8 @@ public:
 
 	void BlockHandSetting();
 	void BlockPileSetting();
+
+	void MoveJoker(int owner);
 
 	void NextTurn();
 };

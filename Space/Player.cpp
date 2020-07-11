@@ -32,6 +32,21 @@ void Player::BlockInHand()
 	}
 }
 
+void Player::MoveJoker()
+{
+	for (auto& iter : m_Hand)
+	{
+		if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
+		{
+			if (INPUT->GetButtonDown())
+			{
+				INPUT->ButtonDown(false);
+				GameMgr::GetInst()->MoveJoker(m_PlayerNum);
+			}
+		}
+	}
+}
+
 void Player::Update(float deltaTime, float Time)
 {
 }
