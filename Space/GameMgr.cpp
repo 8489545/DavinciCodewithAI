@@ -183,22 +183,17 @@ void GameMgr::MoveJoker(int owner)
 {
 	auto iter = std::find_if(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), [](Block* b)
 		{
-			if (b->m_BlockNumber == 12)
+			if (b->m_BlockNumber == 12 && b->m_ActiveBlock)
 				return true;
 			else
 				return false;
-		});	
+		});
 
-	for (auto iter2 = GetPlayer(owner - 1)->m_Hand.begin(); iter2 != GetPlayer(owner - 1)->m_Hand.end();iter2++)
-	{
-		if (iter == iter2)
-			break;
-	}
 	GetPlayer(owner - 1)->m_Hand.erase(std::remove(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), *iter), GetPlayer(owner - 1)->m_Hand.end());
 
 	for (auto& iter : m_AllBlock)
 	{
-		if (iter->m_Owner == owner && iter->m_BlockNumber == 12)
+		if (iter->m_Owner == owner && iter->m_BlockNumber == 12 && iter->m_ActiveBlock)
 		{
 			if (iter->m_HandNum + (_int64)1 > GetPlayer(owner - 1)->m_Hand.size())
 			{
