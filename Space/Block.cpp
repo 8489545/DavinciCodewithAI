@@ -24,6 +24,7 @@ Block::Block(int num, bool front, float rotation, int owner, Color color,Vec2 po
 	m_ActiveBlock = false;
 
 	m_HandNum = 0;
+	m_isJokerPositioning = false;
 }
 
 Block::~Block()
@@ -37,7 +38,7 @@ void Block::Update(float deltaTime, float Time)
 	m_Back->m_Rotation = m_Rotation;
 	m_Active->m_Rotation = m_Rotation;
 
-	if (CollisionMgr::GetInst()->MouseWithBoxSize(this))
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(this) && !m_isJokerPositioning)
 	{
 		m_ActiveBlock = true;
 	}

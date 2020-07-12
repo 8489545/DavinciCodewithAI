@@ -18,6 +18,7 @@ public:
 	int m_BlockNumber;
 	bool m_Front;
 	bool m_ActiveBlock;
+	bool m_isJokerPositioning;
 	int m_Owner;
 	int m_HandNum;
 	Color m_Color;

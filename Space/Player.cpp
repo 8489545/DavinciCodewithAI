@@ -36,13 +36,27 @@ void Player::MoveJoker()
 {
 	for (auto& iter : m_Hand)
 	{
-		if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
+		if (!m_isAI)
 		{
-			if (INPUT->GetButtonDown())
+			if (iter->m_BlockNumber == 12)
 			{
-				INPUT->ButtonDown(false);
-				GameMgr::GetInst()->MoveJoker(m_PlayerNum);
+				iter->m_isJokerPositioning = true;
+				iter->m_ActiveBlock = true;
+				for(int i = rand() % 10;i > 0;i--)
+					GameMgr::GetInst()->MoveJoker(m_PlayerNum);
+				break;
 			}
+			/*if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
+			{
+				if (INPUT->GetButtonDown())
+				{
+					INPUT->ButtonDown(false);
+					GameMgr::GetInst()->MoveJoker(m_PlayerNum);
+				}
+			}*/
+		}
+		else
+		{
 		}
 	}
 }
