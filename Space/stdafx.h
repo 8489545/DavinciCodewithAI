@@ -35,6 +35,7 @@ inline void SafeDelete(T*& x);
 #include"CollisionMgr.h"
 #include"SceneDirector.h"
 #include"TextMgr.h"
+#include"TextUIMgr.h"
 #include"SoundMgr.h"
 #include"Camera.h"
 #include"Sprite.h"
