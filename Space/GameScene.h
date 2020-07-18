@@ -5,6 +5,9 @@ class GameScene : public Scene
 	Sprite* m_Table;
 
 	Sprite* m_UIBlockDist;
+	Sprite* m_UISetJokerPos;
+
+	Sprite* m_JokerPosCompleteButton;
 public:
 	GameScene();
 	~GameScene();
@@ -16,6 +19,7 @@ public:
 
 	void BlockDist();
 	void SetJokerPos();
+	void SetOrder();
 	void BlockFit();
 
 	void Update(float deltaTime, float Time);

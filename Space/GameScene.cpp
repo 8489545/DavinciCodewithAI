@@ -18,6 +18,10 @@ void GameScene::Init()
 
 	m_UIBlockDist = Sprite::Create(L"Painting/Game/UI/Dist.png");
 	m_UIBlockDist->SetPosition(1920 / 2, 100);
+	m_UISetJokerPos = Sprite::Create(L"Painting/Game/UI/JokerPos.png");
+	m_UISetJokerPos->SetPosition(1920 / 2, 100);
+	m_JokerPosCompleteButton = Sprite::Create(L"Painting/Game/UI/JokerPosCompleteButton.png");
+	m_JokerPosCompleteButton->SetPosition(1600, 900);
 
 	GameMgr::GetInst()->BlockInitSetting();
 	GameMgr::GetInst()->SetGamePhase(PHASE::BlockDist);
@@ -57,6 +61,17 @@ void GameScene::SetJokerPos()
 	{
 		iter->MoveJoker();
 	}
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_JokerPosCompleteButton) && INPUT->GetButtonDown())
+	{
+		for (auto& iter : GameMgr::GetInst()->m_AllBlock)
+			iter->m_isJokerPositioning = false;
+
+		GameMgr::GetInst()->SetGamePhase(PHASE::SetOrder);
+	}
+}
+
+void GameScene::SetOrder()
+{
 }
 
 void GameScene::BlockFit()
@@ -74,6 +89,10 @@ void GameScene::Update(float deltaTime, float Time)
 	{
 		SetJokerPos();
 	}
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetOrder)
+	{
+		SetOrder();
+	}
 }
 
 void GameScene::Render()
@@ -82,4 +101,10 @@ void GameScene::Render()
 	m_Table->Render();
 	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
 		m_UIBlockDist->Render();
+
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos)
+	{
+		m_UISetJokerPos->Render();
+		m_JokerPosCompleteButton->Render();
+	}
 }
