@@ -38,24 +38,22 @@ void Player::MoveJoker()
 	{
 		if (!m_isAI)
 		{
-			/*if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
+			if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true && !iter->m_isJokerAlreadyMoved)
 			{
 				if (INPUT->GetButtonDown())
 				{
 					INPUT->ButtonDown(false);
 					GameMgr::GetInst()->MoveJoker(m_PlayerNum);
 				}
-			}*/
-
-			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved)
-			{
-				iter->m_isJokerPositioning = true;
-				GameMgr::GetInst()->MoveJoker(m_PlayerNum);
-				iter->m_isJokerAlreadyMoved = true;
 			}
 		}
 		else
 		{
+			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved)
+			{
+				iter->m_isJokerPositioning = true;
+				GameMgr::GetInst()->MoveJoker(m_PlayerNum, iter);
+			}
 		}
 	}
 }

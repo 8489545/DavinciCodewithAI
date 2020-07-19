@@ -186,7 +186,7 @@ void GameMgr::MoveJoker(int owner)
 {
 	auto iter = std::find_if(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), [](Block* b)
 		{
-			if (b->m_BlockNumber == 12 && (b->m_ActiveBlock || b->m_isJokerPositioning))
+			if (b->m_BlockNumber == 12 && b->m_ActiveBlock)
 				return true;
 			else
 				return false;
@@ -194,45 +194,49 @@ void GameMgr::MoveJoker(int owner)
 
 	GetPlayer(owner - 1)->m_Hand.erase(std::remove(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), *iter), GetPlayer(owner - 1)->m_Hand.end());
 
-	if (GetPlayer(owner - 1)->m_isAI)
+	for (auto& iter : m_AllBlock)
 	{
-		for (auto& iter : m_AllBlock)
+		if (iter->m_Owner == owner && iter->m_BlockNumber == 12 && iter->m_ActiveBlock)
 		{
-			if (iter->m_Owner == owner && iter->m_BlockNumber == 12 && (iter->m_ActiveBlock || iter->m_isJokerPositioning))
+			if (iter->m_HandNum + (_int64)1 > GetPlayer(owner - 1)->m_Hand.size())
 			{
-				if (iter->m_HandNum + (_int64)1 > GetPlayer(owner - 1)->m_Hand.size())
-				{
-					iter->m_HandNum = 0;
-				}
-				else
-				{
-					iter->m_HandNum += 1;
-				}
-				for (auto& iter : GetPlayer(owner - 1)->m_Hand)
-				{
-					iter->m_HandNum += 1;
-				}
-				GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + iter->m_HandNum, iter);
+				iter->m_HandNum = 0;
 			}
+			else
+			{
+				iter->m_HandNum += 1;
+			}
+			for (auto& iter : GetPlayer(owner - 1)->m_Hand)
+			{
+				iter->m_HandNum += 1;
+			}
+			GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + iter->m_HandNum, iter);
 		}
 	}
+	
 }
 
 void GameMgr::MoveJoker(int owner, Block* block)
 {
 	int randPos = rand() % (GetPlayer(owner - 1)->m_Hand.size() + 1);
-	if (block->m_Owner == owner && block->m_BlockNumber == 12 && block->m_isJokerPositioning && !block->m_isJokerAlreadyMoved)
-	{
-		for (auto& iter : GetPlayer(owner - 1)->m_Hand)
+	block->m_HandNum = randPos;
+	auto iter = std::find_if(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), [block](Block* b)
 		{
-			if (iter->m_HandNum >= randPos || iter->m_HandNum < block->m_HandNum)
-			{
-				iter->m_HandNum += 1;
-			}
-		}
-		block->m_HandNum = randPos;
-		GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
+			if (b == block)
+				return true;
+			else
+				return false;
+		});
+
+	GetPlayer(owner - 1)->m_Hand.erase(std::remove(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), *iter), GetPlayer(owner - 1)->m_Hand.end());
+
+	for (auto& iter : GameMgr::GetInst()->GetPlayer(owner - 1)->m_Hand)
+	{
+		if (randPos <= iter->m_HandNum)
+			iter->m_HandNum += 1;
 	}
+	GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
+	block->m_isJokerAlreadyMoved = true;
 }
 
 void GameMgr::NextTurn()
