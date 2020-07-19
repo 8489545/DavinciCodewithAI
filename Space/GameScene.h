@@ -4,9 +4,6 @@ class GameScene : public Scene
 	Sprite* m_BG;
 	Sprite* m_Table;
 
-	Sprite* m_UIBlockDist;
-	Sprite* m_UISetJokerPos;
-
 	Sprite* m_JokerPosCompleteButton;
 public:
 	GameScene();
