@@ -25,6 +25,7 @@ Block::Block(int num, bool front, float rotation, int owner, Color color,Vec2 po
 
 	m_HandNum = 0;
 	m_isJokerPositioning = false;
+	m_isJokerAlreadyMoved = false;
 }
 
 Block::~Block()

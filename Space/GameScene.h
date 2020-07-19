@@ -1,9 +1,11 @@
 #pragma once
+constexpr int PHASEUI = 0;
+constexpr int TURNUI = 1;
 class GameScene : public Scene
 {
 	Sprite* m_BG;
 	Sprite* m_Table;
-
+	
 	Sprite* m_JokerPosCompleteButton;
 public:
 	GameScene();
@@ -17,6 +19,7 @@ public:
 	void BlockDist();
 	void SetJokerPos();
 	void SetOrder();
+	void ImportBlock();
 	void BlockFit();
 
 	void Update(float deltaTime, float Time);

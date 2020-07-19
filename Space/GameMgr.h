@@ -16,6 +16,8 @@ enum class PHASE
 	TurnClock,		//순서 넘기기
 	NONE
 };
+constexpr int ALLBLOCK = 1;
+constexpr int BLOCKPILE = 2;
 class GameMgr : public Singleton<GameMgr>
 {
 public:
@@ -24,6 +26,7 @@ public:
 
 	int m_NumOfPlayer;
 	int m_Turn;
+	int m_Cycle;
 	PHASE m_GamePhase;
 
 	PHASE GetGamePhase() { return m_GamePhase; }
@@ -53,6 +56,7 @@ public:
 	void BlockPileSetting();
 
 	void MoveJoker(int owner);
+	void MoveJoker(int owner, Block* block);
 
 	void NextTurn();
 };

@@ -23,10 +23,10 @@ void Player::BlockInHand()
 			GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetRandomBlock());
 		else
 		{
-			if (INPUT->GetButtonDown() && GameMgr::GetInst()->GetActiveBlock(2) != nullptr)
+			if (INPUT->GetButtonDown() && GameMgr::GetInst()->GetActiveBlock(BLOCKPILE) != nullptr)
 			{
 				INPUT->ButtonDown(false);
-				GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetActiveBlock(2));
+				GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetActiveBlock(BLOCKPILE));
 			}
 		}
 	}
@@ -38,24 +38,24 @@ void Player::MoveJoker()
 	{
 		if (!m_isAI)
 		{
-			if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
+			/*if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true)
 			{
 				if (INPUT->GetButtonDown())
 				{
 					INPUT->ButtonDown(false);
 					GameMgr::GetInst()->MoveJoker(m_PlayerNum);
 				}
+			}*/
+
+			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved)
+			{
+				iter->m_isJokerPositioning = true;
+				GameMgr::GetInst()->MoveJoker(m_PlayerNum);
+				iter->m_isJokerAlreadyMoved = true;
 			}
 		}
 		else
 		{
-			if (iter->m_BlockNumber == 12)
-			{
-				iter->m_isJokerPositioning = true;
-				iter->m_ActiveBlock = true;
-				for (int i = rand() % 10; i > 0; i--)
-					GameMgr::GetInst()->MoveJoker(m_PlayerNum);
-			}
 		}
 	}
 }

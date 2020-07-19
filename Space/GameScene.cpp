@@ -74,8 +74,27 @@ void GameScene::SetOrder()
 {
 	int startingPlayerNum = (rand() % GameMgr::GetInst()->m_NumOfPlayer) + 1;
 	GameMgr::GetInst()->m_Turn = startingPlayerNum;
+	GameMgr::GetInst()->m_Cycle = 1;
+	GameMgr::GetInst()->SetGamePhase(PHASE::ImportBlock);
+}
 
-	GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
+void GameScene::ImportBlock()
+{
+	for (auto& iter : GameMgr::GetInst()->m_Players)
+	{
+		iter->BlockInHand();
+
+		int InitialHand = 0;
+		if (GameMgr::GetInst()->m_NumOfPlayer == 2 || GameMgr::GetInst()->m_NumOfPlayer == 3)
+			InitialHand = 4;
+		else if (GameMgr::GetInst()->m_NumOfPlayer == 4)
+			InitialHand = 3;
+
+		if (iter->m_Hand.size() == InitialHand + GameMgr::GetInst()->m_Cycle)
+		{
+			GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
+		}
+	}
 }
 
 void GameScene::BlockFit()
@@ -85,27 +104,41 @@ void GameScene::BlockFit()
 
 void GameScene::Update(float deltaTime, float Time)
 {
-	TextUIMgr::GetInst()->InitText(1, "Player" + std::to_string(GameMgr::GetInst()->m_Turn) + "의 턴");
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
+	TextUIMgr::GetInst()->InitText(TURNUI, "Player" + std::to_string(GameMgr::GetInst()->m_Turn) + "의 턴");
+
+	switch (GameMgr::GetInst()->GetGamePhase())
 	{
-		TextUIMgr::GetInst()->InitText(0, Vec2(0, 800));
-		TextUIMgr::GetInst()->InitText(0, "블럭 선택");
+	case PHASE::BlockDist:
+		TextUIMgr::GetInst()->InitText(PHASEUI, Vec2(0, 800));
+		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 선택");
 		BlockDist();
-	}
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos)
-	{
-		TextUIMgr::GetInst()->InitText(0, "조커 위치 지정");
+		break;
+	case PHASE::SetJokerPos:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "조커 위치 지정");
 		SetJokerPos();
-	}
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetOrder)
-	{
-		TextUIMgr::GetInst()->InitText(0, "순서 정하는중....");
+		break;
+	case PHASE::SetOrder:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "순서 정하는중....");
 		SetOrder();
-	}
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockFit)
-	{
-		TextUIMgr::GetInst()->InitText(0, "블럭 맞추기");
+		break;
+	case PHASE::ImportBlock:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 가져오기");
+		ImportBlock();
+		break;
+	case PHASE::BlockFit:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 맞추기");
 		BlockFit();
+		break;
+	case PHASE::KeepFit:
+		break;
+	case PHASE::StopFit:
+		break;
+	case PHASE::TurnClock:
+		break;
+	case PHASE::NONE:
+		break;
+	default:
+		break;
 	}
 }
 
