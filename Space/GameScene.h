@@ -5,7 +5,7 @@ class GameScene : public Scene
 {
 	Sprite* m_BG;
 	Sprite* m_Table;
-	
+
 	Sprite* m_JokerPosCompleteButton;
 public:
 	GameScene();
@@ -14,12 +14,13 @@ public:
 	int m_DistBlockNum;
 
 	void Init();
-	void Release(); 
+	void Release();
 
 	void BlockDist();
 	void SetJokerPos();
 	void SetOrder();
 	void ImportBlock();
+	void MoveJokerPos();
 	void BlockFit();
 
 	void Update(float deltaTime, float Time);

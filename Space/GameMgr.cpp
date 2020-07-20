@@ -113,7 +113,7 @@ void GameMgr::CreateBlock(int num, bool front, float rotation, int owner, Color 
 	ObjMgr->AddObject(new Block(num, front, rotation, owner, color, pos), "Block");
 }
 
-void GameMgr::BlockInHand(int playernum,Block* block)
+void GameMgr::BlockInHand(int playernum, Block* block)
 {
 	block->m_Owner = playernum;
 	GetPlayer(playernum - 1)->m_Hand.push_back(block);
@@ -132,7 +132,7 @@ void GameMgr::BlockInHand(int playernum,Block* block)
 		});
 	BlockPileSetting();
 
-	if(GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
 		NextTurn();
 }
 void GameMgr::BlockHandSetting()
@@ -150,7 +150,7 @@ void GameMgr::BlockHandSetting()
 			if (i == 0)
 			{
 				Pos.x += 100;
-			} 
+			}
 			else if (i == 1)
 			{
 				iter->m_Rotation = D3DXToRadian(-90);
@@ -158,7 +158,7 @@ void GameMgr::BlockHandSetting()
 			}
 			iter->m_HandNum = handnum;
 			iter->SetPosition(Pos.x, Pos.y);
-			
+
 			handnum += 1;
 		}
 	}
@@ -213,7 +213,7 @@ void GameMgr::MoveJoker(int owner)
 			GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + iter->m_HandNum, iter);
 		}
 	}
-	
+
 }
 
 void GameMgr::MoveJoker(int owner, Block* block)
@@ -235,8 +235,8 @@ void GameMgr::MoveJoker(int owner, Block* block)
 		if (randPos <= iter->m_HandNum)
 			iter->m_HandNum += 1;
 	}
-	GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
 	block->m_isJokerAlreadyMoved = true;
+	GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
 }
 
 void GameMgr::NextTurn()

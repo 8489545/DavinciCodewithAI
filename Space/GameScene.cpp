@@ -66,6 +66,14 @@ void GameScene::SetJokerPos()
 		for (auto& iter : GameMgr::GetInst()->m_AllBlock)
 			iter->m_isJokerPositioning = false;
 
+		for (auto& iter : GameMgr::GetInst()->m_Players)
+		{
+			for (auto& iter2 : iter->m_Hand)
+			{
+				if (iter2->m_BlockNumber == 12)
+					iter2->m_isJokerAlreadyMoved = true;
+			}
+		}
 		GameMgr::GetInst()->SetGamePhase(PHASE::SetOrder);
 	}
 }
@@ -92,8 +100,39 @@ void GameScene::ImportBlock()
 
 		if (iter->m_Hand.size() == InitialHand + GameMgr::GetInst()->m_Cycle)
 		{
+			for (auto& iter2 : iter->m_Hand)
+			{
+				if (iter2->m_BlockNumber == 12 && !iter2->m_isJokerAlreadyMoved)
+				{
+					GameMgr::GetInst()->SetGamePhase(PHASE::MoveJokerPos);
+					return;
+				}
+			}
 			GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
 		}
+	}
+}
+
+void GameScene::MoveJokerPos()
+{
+	for (auto& iter : GameMgr::GetInst()->m_Players)
+	{
+		iter->MoveJoker();
+	}
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_JokerPosCompleteButton) && INPUT->GetButtonDown())
+	{
+		for (auto& iter : GameMgr::GetInst()->m_AllBlock)
+			iter->m_isJokerPositioning = false;
+
+		for (auto& iter : GameMgr::GetInst()->m_Players)
+		{
+			for (auto& iter2 : iter->m_Hand)
+			{
+				if (iter2->m_BlockNumber == 12)
+					iter2->m_isJokerAlreadyMoved = true;
+			}
+		}
+		GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
 	}
 }
 
@@ -125,6 +164,10 @@ void GameScene::Update(float deltaTime, float Time)
 		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 가져오기");
 		ImportBlock();
 		break;
+	case PHASE::MoveJokerPos:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "조커 위치 정하기");
+		MoveJokerPos();
+		break;
 	case PHASE::BlockFit:
 		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 맞추기");
 		BlockFit();
@@ -147,7 +190,7 @@ void GameScene::Render()
 	m_BG->Render();
 	m_Table->Render();
 
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos)
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos || GameMgr::GetInst()->GetGamePhase() == PHASE::MoveJokerPos)
 	{
 		m_JokerPosCompleteButton->Render();
 	}
