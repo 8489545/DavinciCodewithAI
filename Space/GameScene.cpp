@@ -132,7 +132,8 @@ void GameScene::MoveJokerPos()
 
 void GameScene::BlockFit()
 {
-	GameMgr::GetInst()->BlockFit(GameMgr::GetInst()->m_Turn);
+	//GameMgr::GetInst()->BlockFit(GameMgr::GetInst()->m_Turn);
+	GameMgr::GetInst()->BlockFit(1);
 }
 
 void GameScene::Update(float deltaTime, float Time)
