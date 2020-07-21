@@ -24,6 +24,7 @@ void GameScene::Init()
 
 	TextUIMgr::GetInst()->AddText(72, true, false, "Arial");
 	TextUIMgr::GetInst()->AddText(72, true, false, "Arial", Vec2(1920 / 2, 0));
+	TextUIMgr::GetInst()->AddText(72, true, false, "Arial", Vec2(0, 900));
 
 
 	m_DistBlockNum = 0;
@@ -138,12 +139,13 @@ void GameScene::BlockFit()
 
 void GameScene::Update(float deltaTime, float Time)
 {
+	TextUIMgr::GetInst()->InitText(EVENTUI, "EVENT");
 	TextUIMgr::GetInst()->InitText(TURNUI, "Player" + std::to_string(GameMgr::GetInst()->m_Turn) + "의 턴");
 
 	switch (GameMgr::GetInst()->GetGamePhase())
 	{
 	case PHASE::BlockDist:
-		TextUIMgr::GetInst()->InitText(PHASEUI, Vec2(0, 800));
+		TextUIMgr::GetInst()->InitText(PHASEUI, Vec2(0, 0));
 		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 선택");
 		BlockDist();
 		break;

@@ -1,6 +1,8 @@
 #pragma once
 constexpr int PHASEUI = 0;
 constexpr int TURNUI = 1;
+constexpr int EVENTUI = 2;
+
 class GameScene : public Scene
 {
 	Sprite* m_BG;
