@@ -18,6 +18,9 @@ public:
 	void MoveJoker();
 	void BlockFit();
 
+	void BlockFitSuccess();
+	void BlockFitFailed();
+
 	void Update(float deltaTime,float Time);
 	void Render();
 };

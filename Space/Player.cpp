@@ -80,6 +80,14 @@ void Player::BlockFit()
 	}
 }
 
+void Player::BlockFitSuccess()
+{
+}
+
+void Player::BlockFitFailed()
+{
+}
+
 void Player::Update(float deltaTime, float Time)
 {
 }
