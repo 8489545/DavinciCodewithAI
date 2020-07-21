@@ -239,6 +239,14 @@ void GameMgr::MoveJoker(int owner, Block* block)
 	GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
 }
 
+void GameMgr::BlockFit(int owner)
+{
+	if (GetPlayer(owner - 1)->m_isFittingBlock == false)
+	{
+		GetPlayer(owner - 1)->BlockFit();
+	}
+}
+
 void GameMgr::NextTurn()
 {
 	if (m_Turn == m_NumOfPlayer)

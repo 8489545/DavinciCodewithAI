@@ -7,6 +7,7 @@ public:
 
 	int m_PlayerNum;
 	bool m_isAI;
+	bool m_isFittingBlock;
 
 	std::vector<Block*> m_Hand;
 
@@ -14,6 +15,7 @@ public:
 
 	void BlockInHand();
 	void MoveJoker();
+	void BlockFit();
 
 	void Update(float deltaTime,float Time);
 	void Render();

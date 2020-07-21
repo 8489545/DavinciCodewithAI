@@ -59,5 +59,7 @@ public:
 	void MoveJoker(int owner);
 	void MoveJoker(int owner, Block* block);
 
+	void BlockFit(int owner);
+
 	void NextTurn();
 };

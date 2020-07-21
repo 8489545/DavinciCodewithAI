@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include"BlockFitPanel.h"
 
 Player::Player()
 {
@@ -13,6 +14,7 @@ void Player::SetPlayer(int num, bool ai)
 {
 	m_PlayerNum = num;
 	m_isAI = ai;
+	m_isFittingBlock = false;
 }
 
 void Player::BlockInHand()
@@ -54,6 +56,18 @@ void Player::MoveJoker()
 				iter->m_isJokerPositioning = true;
 				GameMgr::GetInst()->MoveJoker(m_PlayerNum, iter);
 			}
+		}
+	}
+}
+
+void Player::BlockFit()
+{
+	for (auto& iter : GameMgr::GetInst()->m_AllBlock)
+	{
+		if ((iter->m_Owner != m_PlayerNum && iter->m_Owner != 0) && iter->m_ActiveBlock && INPUT->GetButtonDown())
+		{
+			m_isFittingBlock = true;
+			ObjMgr->AddObject(new BlockFitPanel(iter, m_PlayerNum), "UI");
 		}
 	}
 }
