@@ -28,6 +28,20 @@ void BlockFitPanel::Update(float deltaTime, float Time)
 			iter->m_isFittingBlock = true;
 		}
 	}
+
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_CloseButton) && INPUT->GetButtonDown())
+	{
+		for (auto& iter : GameMgr::GetInst()->m_Players)
+		{
+			if (iter->m_PlayerNum == m_Owner)
+			{
+				m_FittingBlock->m_ActiveBlock = false;
+				iter->m_isFittingBlock = false;
+				INPUT->ButtonDown(false);
+				SetDestroy(true);
+			}
+		}
+	}
 }
 
 void BlockFitPanel::Render()

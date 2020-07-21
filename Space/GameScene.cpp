@@ -45,7 +45,6 @@ void GameScene::BlockDist()
 				for (auto& iter : GameMgr::GetInst()->m_Players)
 				{
 					iter->BlockDist();
-					//iter->BlockInHand();
 				}
 			}
 			else
@@ -133,9 +132,7 @@ void GameScene::MoveJokerPos()
 
 void GameScene::BlockFit()
 {
-	printf("%d \n", GameMgr::GetInst()->m_Turn);
-	//GameMgr::GetInst()->BlockFit(GameMgr::GetInst()->m_Turn);
-	GameMgr::GetInst()->BlockFit(1);
+	GameMgr::GetInst()->BlockFit(GameMgr::GetInst()->m_Turn);
 }
 
 void GameScene::Update(float deltaTime, float Time)
