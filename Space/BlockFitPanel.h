@@ -5,6 +5,7 @@ class BlockFitPanel : public Object
 	Sprite* m_CloseButton;
 	Sprite* m_NextButton;
 	Sprite* m_PrevButton;
+	Sprite* m_DeicisonButton;
 
 	TextMgr* m_BlockNumText;
 public:

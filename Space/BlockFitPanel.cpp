@@ -9,11 +9,14 @@ BlockFitPanel::BlockFitPanel(Block* block,int owner)
 	m_CloseButton = Sprite::Create(L"Painting/BlockFit/CloseButton.png");
 	m_NextButton = Sprite::Create(L"Painting/BlockFit/NextButton.png");
 	m_PrevButton = Sprite::Create(L"Painting/BlockFit/PrevButton.png");
+	m_DeicisonButton = Sprite::Create(L"Painting/BlockFit/DecisionButton.png");
 
 	m_CloseButton->SetPosition((m_Position.x + m_Size.x / 2) - m_CloseButton->m_Size.x / 2, (m_Position.y - m_Size.y / 2) + m_CloseButton->m_Size.y / 2);
 
 	m_NextButton->SetPosition(m_Position.x + 100, m_Position.y);
 	m_PrevButton->SetPosition(m_Position.x - 100, m_Position.y);
+
+	m_DeicisonButton->SetPosition((m_Position.x - m_Size.x / 2) + m_CloseButton->m_Size.x / 2, (m_Position.y + m_Size.y / 2) - m_CloseButton->m_Size.y / 2);
 
 	m_FittingBlock = block;
 	m_Owner = owner;
@@ -32,7 +35,7 @@ void BlockFitPanel::Update(float deltaTime, float Time)
 {
 	m_FittingBlock->m_ActiveBlock = true;
 	m_CloseButton->SetPosition((m_Position.x + m_Size.x / 2) - m_CloseButton->m_Size.x / 2, (m_Position.y - m_Size.y / 2) + m_CloseButton->m_Size.y / 2);
-
+	m_DeicisonButton->SetPosition((m_Position.x - m_Size.x / 2) + m_DeicisonButton->m_Size.x / 2, (m_Position.y + m_Size.y / 2) - m_DeicisonButton->m_Size.y / 2);
 	m_NextButton->SetPosition(m_Position.x + 100, m_Position.y);
 	m_PrevButton->SetPosition(m_Position.x - 100, m_Position.y);
 
@@ -60,6 +63,10 @@ void BlockFitPanel::Update(float deltaTime, float Time)
 			m_Number += 1;
 		}
 	}
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_DeicisonButton) && INPUT->GetButtonDown())
+	{
+		
+	}
 
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_CloseButton) && INPUT->GetButtonDown())
 	{
@@ -83,6 +90,8 @@ void BlockFitPanel::Render()
 	m_CloseButton->Render();
 	m_NextButton->Render();
 	m_PrevButton->Render();
+	m_DeicisonButton->Render();
+
 	Renderer::GetInst()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 	if(m_Number == 12)
 		m_BlockNumText->print("-", m_Position.x - 25, m_Position.y - 30);
