@@ -220,6 +220,7 @@ void GameMgr::MoveJoker(int owner, Block* block)
 {
 	int randPos = rand() % (GetPlayer(owner - 1)->m_Hand.size() + 1);
 	block->m_HandNum = randPos;
+
 	auto iter = std::find_if(GetPlayer(owner - 1)->m_Hand.begin(), GetPlayer(owner - 1)->m_Hand.end(), [block](Block* b)
 		{
 			if (b == block)
@@ -234,8 +235,10 @@ void GameMgr::MoveJoker(int owner, Block* block)
 	{
 		if (randPos <= iter->m_HandNum)
 			iter->m_HandNum += 1;
+
+		if (iter->m_HandNum >= GameMgr::GetInst()->GetPlayer(owner - 1)->m_Hand.size())
+			iter->m_HandNum = GameMgr::GetInst()->GetPlayer(owner - 1)->m_Hand.size();
 	}
-	block->m_isJokerAlreadyMoved = true;
 	GetPlayer(owner - 1)->m_Hand.insert(GetPlayer(owner - 1)->m_Hand.begin() + block->m_HandNum, block);
 }
 

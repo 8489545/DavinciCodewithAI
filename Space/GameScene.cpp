@@ -44,7 +44,8 @@ void GameScene::BlockDist()
 			{
 				for (auto& iter : GameMgr::GetInst()->m_Players)
 				{
-					iter->BlockDist();
+					//iter->BlockDist();
+					iter->BlockInHand();
 				}
 			}
 			else
@@ -63,9 +64,6 @@ void GameScene::SetJokerPos()
 	}
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_JokerPosCompleteButton) && INPUT->GetButtonDown())
 	{
-		for (auto& iter : GameMgr::GetInst()->m_AllBlock)
-			iter->m_isJokerPositioning = false;
-
 		for (auto& iter : GameMgr::GetInst()->m_Players)
 		{
 			for (auto& iter2 : iter->m_Hand)
@@ -121,9 +119,6 @@ void GameScene::MoveJokerPos()
 	}
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_JokerPosCompleteButton) && INPUT->GetButtonDown())
 	{
-		for (auto& iter : GameMgr::GetInst()->m_AllBlock)
-			iter->m_isJokerPositioning = false;
-
 		for (auto& iter : GameMgr::GetInst()->m_Players)
 		{
 			for (auto& iter2 : iter->m_Hand)

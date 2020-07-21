@@ -61,7 +61,7 @@ void Player::MoveJoker()
 		{
 			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved)
 			{
-				iter->m_isJokerPositioning = true;
+				iter->m_isJokerAlreadyMoved = true;
 				GameMgr::GetInst()->MoveJoker(m_PlayerNum, iter);
 			}
 		}
