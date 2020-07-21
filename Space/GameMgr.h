@@ -46,6 +46,7 @@ public:
 
 	Player* GetPlayer(int num);
 	Block* GetRandomBlock();
+	Block* GetRandomBlockExcludingJoker();
 	Block* GetActiveBlock(int num);
 
 	void PlayerNumSetting(int num);

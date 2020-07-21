@@ -36,7 +36,28 @@ Block* GameMgr::GetRandomBlock()
 	if (m_BlockPile.size() > 0)
 	{
 		num = (rand() % m_BlockPile.size());
+
 		return m_BlockPile.at(num);
+	}
+	return nullptr;
+}
+
+Block* GameMgr::GetRandomBlockExcludingJoker()
+{
+	int num;
+	if (m_BlockPile.size() > 0)
+	{
+		while (1)
+		{
+			num = (rand() % m_BlockPile.size());
+
+			if (m_BlockPile.at(num)->m_BlockNumber == 12)
+			{
+				num = (rand() % m_BlockPile.size());
+			}
+			if (m_BlockPile.at(num)->m_BlockNumber != 12)
+				return m_BlockPile.at(num);
+		}
 	}
 	return nullptr;
 }

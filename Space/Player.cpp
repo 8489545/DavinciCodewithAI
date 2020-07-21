@@ -21,7 +21,7 @@ void Player::BlockDist()
 {
 	if (GameMgr::GetInst()->m_Turn == m_PlayerNum)
 	{
-		GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetRandomBlock());
+		GameMgr::GetInst()->BlockInHand(m_PlayerNum, GameMgr::GetInst()->GetRandomBlockExcludingJoker());
 	}
 }
 

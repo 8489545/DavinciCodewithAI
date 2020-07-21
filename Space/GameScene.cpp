@@ -44,8 +44,8 @@ void GameScene::BlockDist()
 			{
 				for (auto& iter : GameMgr::GetInst()->m_Players)
 				{
-					//iter->BlockDist();
-					iter->BlockInHand();
+					iter->BlockDist();
+					//iter->BlockInHand();
 				}
 			}
 			else
