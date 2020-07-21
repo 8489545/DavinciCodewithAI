@@ -13,6 +13,7 @@ public:
 
 	void SetPlayer(int num, bool ai);
 
+	void BlockDist();
 	void BlockInHand();
 	void MoveJoker();
 	void BlockFit();
