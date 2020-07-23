@@ -68,15 +68,37 @@ void BlockFitPanel::Update(float deltaTime, float Time)
 		INPUT->ButtonDown(false);
 		if (m_Number == m_FittingBlock->m_BlockNumber)
 		{
-			printf("정답");
 			m_FittingBlock->m_Front = true;
+			m_FittingBlock->m_isRevealedBlock = true;
 			TextUIMgr::GetInst()->InitText(EVENTUI, "Player" + std::to_string(m_Owner) + "이 Player" + std::to_string(m_FittingBlock->m_Owner) + "의 블록을 맞췄습니다.");
-			GameMgr::GetInst()->GetPlayer(m_Owner)->BlockFitSuccess();
+			for (auto& iter : GameMgr::GetInst()->m_Players)
+			{
+				if (iter->m_PlayerNum == m_Owner)
+				{
+					m_BlockNumText->Release();
+					m_FittingBlock->m_ActiveBlock = false;
+					iter->m_isFittingBlock = false;
+					INPUT->ButtonDown(false);
+					SetDestroy(true);
+				}
+			}
+			GameMgr::GetInst()->GetPlayer(m_Owner - 1)->BlockFitSuccess();
 		}
 		else
 		{
 			TextUIMgr::GetInst()->InitText(EVENTUI, "Player" + std::to_string(m_Owner) + "이 Player" + std::to_string(m_FittingBlock->m_Owner) + "의 블록을 맞추는데 실패했습니다.");
-			GameMgr::GetInst()->GetPlayer(m_Owner)->BlockFitSuccess();
+			for (auto& iter : GameMgr::GetInst()->m_Players)
+			{
+				if (iter->m_PlayerNum == m_Owner)
+				{
+					m_BlockNumText->Release();
+					m_FittingBlock->m_ActiveBlock = false;
+					iter->m_isFittingBlock = false;
+					INPUT->ButtonDown(false);
+					SetDestroy(true);
+				}
+			}
+			GameMgr::GetInst()->GetPlayer(m_Owner - 1)->BlockFitFailed();
 		}
 	}
 

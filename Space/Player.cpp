@@ -82,15 +82,29 @@ void Player::BlockFit()
 
 void Player::BlockFitSuccess()
 {
-
 }
 
 void Player::BlockFitFailed()
 {
+	m_PrevBlock->m_Front = true;
+	m_PrevBlock->m_isRevealedBlock = true;
+
+	GameMgr::GetInst()->NextTurn();
+	GameMgr::GetInst()->SetGamePhase(PHASE::ImportBlock);
 }
 
 void Player::Update(float deltaTime, float Time)
 {
+	for (auto& iter : m_Hand)
+	{
+		if (!m_isAI)
+		{
+			if (iter->m_isRevealedBlock)
+			{
+				iter->SetScale(0.75, 0.75);
+			}
+		}
+	}
 }
 
 void Player::Render()

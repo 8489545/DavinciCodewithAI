@@ -31,6 +31,10 @@ void SceneDirector::Update(float deltaTime, float time)
 	GameMgr::GetInst()->Update();
 	ObjMgr->Update(deltaTime, time);
 
+	for (int i = 0; i < GameMgr::GetInst()->m_NumOfPlayer;i++)
+	{
+		GameMgr::GetInst()->GetPlayer(i)->Update(deltaTime,time);
+	}
 	if (m_CurrentScene)
 		m_CurrentScene->Update(deltaTime, time);
 

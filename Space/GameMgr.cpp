@@ -105,8 +105,8 @@ void GameMgr::BlockInitSetting()
 {
 	for (int i = 0; i < 13; i++)
 	{
-		CreateBlock(i, true, 0, 0, Color::BLACK, Vec2(i * 100 + 100, 300));
-		CreateBlock(i, true, 0, 0, Color::WHITE, Vec2(i * 100 + 100, 400));
+		CreateBlock(i, false, 0, 0, Color::BLACK, Vec2(i * 100 + 100, 300));
+		CreateBlock(i, false, 0, 0, Color::WHITE, Vec2(i * 100 + 100, 400));
 	}
 	std::random_device rand;
 	std::mt19937 g(rand());
@@ -152,6 +152,13 @@ void GameMgr::BlockInHand(int playernum, Block* block)
 			}
 		});
 	BlockPileSetting();
+
+	GetPlayer(playernum - 1)->m_PrevBlock = block;
+
+	if (playernum == 1)
+	{
+		block->m_Front = true;
+	}
 
 	if (GameMgr::GetInst()->GetGamePhase() == PHASE::BlockDist)
 		NextTurn();
@@ -267,6 +274,7 @@ void GameMgr::BlockFit(int owner)
 {
 	if (GetPlayer(owner - 1)->m_isFittingBlock == false)
 	{
+		//printf("%d \n", owner);
 		GetPlayer(owner - 1)->BlockFit();
 	}
 }

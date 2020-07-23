@@ -11,6 +11,8 @@ public:
 
 	std::vector<Block*> m_Hand;
 
+	Block* m_PrevBlock;
+
 	void SetPlayer(int num, bool ai);
 
 	void BlockDist();
