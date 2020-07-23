@@ -82,9 +82,17 @@ void GameScene::ImportBlock()
 			{
 				if (iter2->m_BlockNumber == 12 && !iter2->m_isJokerAlreadyMoved)
 				{
-					GameMgr::GetInst()->SetGamePhase(PHASE::MoveJokerPos);
-					return;
+					if (!iter->m_isAI)
+					{
+						GameMgr::GetInst()->SetGamePhase(PHASE::MoveJokerPos);
+						return;
+					}
+					else if (iter->m_isAI)
+					{
+						iter->MoveJoker();
+					}
 				}
+				
 			}
 			GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
 		}
