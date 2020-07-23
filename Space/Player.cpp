@@ -82,6 +82,7 @@ void Player::BlockFit()
 
 void Player::BlockFitSuccess()
 {
+
 }
 
 void Player::BlockFitFailed()

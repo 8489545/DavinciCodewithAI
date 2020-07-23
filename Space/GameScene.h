@@ -1,7 +1,4 @@
 #pragma once
-constexpr int PHASEUI = 0;
-constexpr int TURNUI = 1;
-constexpr int EVENTUI = 2;
 
 class GameScene : public Scene
 {
@@ -19,7 +16,6 @@ public:
 	void Release();
 
 	void BlockDist();
-	void SetJokerPos();
 	void SetOrder();
 	void ImportBlock();
 	void MoveJokerPos();

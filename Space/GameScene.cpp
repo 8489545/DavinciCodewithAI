@@ -24,7 +24,7 @@ void GameScene::Init()
 
 	TextUIMgr::GetInst()->AddText(72, true, false, "Arial");
 	TextUIMgr::GetInst()->AddText(72, true, false, "Arial", Vec2(1920 / 2, 0));
-	TextUIMgr::GetInst()->AddText(72, true, false, "Arial", Vec2(0, 900));
+	TextUIMgr::GetInst()->AddText(48, true, false, "Arial", Vec2(1920 / 2, 72));
 
 
 	m_DistBlockNum = 0;
@@ -50,29 +50,9 @@ void GameScene::BlockDist()
 			}
 			else
 			{
-				GameMgr::GetInst()->SetGamePhase(PHASE::SetJokerPos);
+				GameMgr::GetInst()->SetGamePhase(PHASE::SetOrder);
 			}
 		}
-	}
-}
-
-void GameScene::SetJokerPos()
-{
-	for (auto& iter : GameMgr::GetInst()->m_Players)
-	{
-		iter->MoveJoker();
-	}
-	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_JokerPosCompleteButton) && INPUT->GetButtonDown())
-	{
-		for (auto& iter : GameMgr::GetInst()->m_Players)
-		{
-			for (auto& iter2 : iter->m_Hand)
-			{
-				if (iter2->m_BlockNumber == 12)
-					iter2->m_isJokerAlreadyMoved = true;
-			}
-		}
-		GameMgr::GetInst()->SetGamePhase(PHASE::SetOrder);
 	}
 }
 
@@ -139,7 +119,6 @@ void GameScene::BlockFit()
 
 void GameScene::Update(float deltaTime, float Time)
 {
-	TextUIMgr::GetInst()->InitText(EVENTUI, "EVENT");
 	TextUIMgr::GetInst()->InitText(TURNUI, "Player" + std::to_string(GameMgr::GetInst()->m_Turn) + "의 턴");
 
 	switch (GameMgr::GetInst()->GetGamePhase())
@@ -148,10 +127,6 @@ void GameScene::Update(float deltaTime, float Time)
 		TextUIMgr::GetInst()->InitText(PHASEUI, Vec2(0, 0));
 		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 선택");
 		BlockDist();
-		break;
-	case PHASE::SetJokerPos:
-		TextUIMgr::GetInst()->InitText(PHASEUI, "조커 위치 지정");
-		SetJokerPos();
 		break;
 	case PHASE::SetOrder:
 		TextUIMgr::GetInst()->InitText(PHASEUI, "순서 정하는중....");
@@ -187,7 +162,7 @@ void GameScene::Render()
 	m_BG->Render();
 	m_Table->Render();
 
-	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SetJokerPos || GameMgr::GetInst()->GetGamePhase() == PHASE::MoveJokerPos)
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::MoveJokerPos)
 	{
 		m_JokerPosCompleteButton->Render();
 	}

@@ -7,7 +7,6 @@
 enum class PHASE
 {
 	BlockDist,		//블록 분배
-	SetJokerPos,	//조커 위치 정하기
 	SetOrder,		//순서 정하기
 	ImportBlock,	//블록 가져오기
 	MoveJokerPos,	//가져온 조커의 위치 정하기
@@ -19,6 +18,10 @@ enum class PHASE
 };
 constexpr int ALLBLOCK = 1;
 constexpr int BLOCKPILE = 2;
+
+constexpr int PHASEUI = 0;
+constexpr int TURNUI = 1;
+constexpr int EVENTUI = 2;
 class GameMgr : public Singleton<GameMgr>
 {
 public:

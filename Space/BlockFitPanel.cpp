@@ -65,7 +65,19 @@ void BlockFitPanel::Update(float deltaTime, float Time)
 	}
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_DeicisonButton) && INPUT->GetButtonDown())
 	{
-		
+		INPUT->ButtonDown(false);
+		if (m_Number == m_FittingBlock->m_BlockNumber)
+		{
+			printf("정답");
+			m_FittingBlock->m_Front = true;
+			TextUIMgr::GetInst()->InitText(EVENTUI, "Player" + std::to_string(m_Owner) + "이 Player" + std::to_string(m_FittingBlock->m_Owner) + "의 블록을 맞췄습니다.");
+			GameMgr::GetInst()->GetPlayer(m_Owner)->BlockFitSuccess();
+		}
+		else
+		{
+			TextUIMgr::GetInst()->InitText(EVENTUI, "Player" + std::to_string(m_Owner) + "이 Player" + std::to_string(m_FittingBlock->m_Owner) + "의 블록을 맞추는데 실패했습니다.");
+			GameMgr::GetInst()->GetPlayer(m_Owner)->BlockFitSuccess();
+		}
 	}
 
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_CloseButton) && INPUT->GetButtonDown())
