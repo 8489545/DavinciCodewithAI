@@ -65,7 +65,7 @@ void GameScene::BlockDist()
 void GameScene::SetOrder()
 {
 	int startingPlayerNum = (rand() % GameMgr::GetInst()->m_NumOfPlayer) + 1;
-	GameMgr::GetInst()->m_Turn = startingPlayerNum;
+	GameMgr::GetInst()->m_Turn = startingPlayerNum; 
 	GameMgr::GetInst()->m_Cycle = 1;
 	GameMgr::GetInst()->SetGamePhase(PHASE::ImportBlock);
 }
@@ -81,7 +81,7 @@ void GameScene::ImportBlock()
 			InitialHand = 4;
 		else if (GameMgr::GetInst()->m_NumOfPlayer == 4)
 			InitialHand = 3;
-
+		
 		if (iter->m_Hand.size() == InitialHand + GameMgr::GetInst()->m_Cycle)
 		{
 			for (auto& iter2 : iter->m_Hand)
@@ -135,10 +135,13 @@ void GameScene::NextAction()
 	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_KeepFitButton) && INPUT->GetButtonDown())
 	{
 		INPUT->ButtonDown(false);
+		GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
 	}
-	else if (CollisionMgr::GetInst()->MouseWithBoxSize(m_KeepFitButton) && INPUT->GetButtonDown())
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_StopFitButton) && INPUT->GetButtonDown())
 	{
 		INPUT->ButtonDown(false);
+		GameMgr::GetInst()->NextTurn();
+		GameMgr::GetInst()->SetGamePhase(PHASE::ImportBlock);
 	}
 }
 
@@ -189,9 +192,9 @@ void GameScene::Render()
 	{
 		m_JokerPosCompleteButton->Render();
 	}
-	//if (GameMgr::GetInst()->GetGamePhase() == PHASE::SelectNextAct)
-	//{
+	if (GameMgr::GetInst()->GetGamePhase() == PHASE::SelectNextAct)
+	{
 		m_KeepFitButton->Render();
 		m_StopFitButton->Render();
-	//}
+	}
 }
