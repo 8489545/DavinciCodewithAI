@@ -172,7 +172,12 @@ void GameMgr::BlockHandSetting()
 		if (i == 0)
 			Pos = Vec2(600, 900);
 		else if (i == 1)
-			Pos = Vec2(1700, 1000);
+		{
+			if (m_NumOfPlayer == 2)
+				Pos = Vec2(600, 200);
+			else
+				Pos = Vec2(1700, 1000);
+		}
 		for (auto& iter : GetPlayer(i)->m_Hand)
 		{
 			if (i == 0)
@@ -181,8 +186,16 @@ void GameMgr::BlockHandSetting()
 			}
 			else if (i == 1)
 			{
-				iter->m_Rotation = D3DXToRadian(-90);
-				Pos.y -= 100;
+				if (m_NumOfPlayer == 2)
+				{
+					iter->m_Rotation = D3DXToRadian(-180);
+					Pos.x += 100;
+				}
+				else
+				{
+					iter->m_Rotation = D3DXToRadian(-90);
+					Pos.y -= 100;
+				}
 			}
 			iter->m_HandNum = handnum;
 			iter->SetPosition(Pos.x, Pos.y);
@@ -194,7 +207,7 @@ void GameMgr::BlockHandSetting()
 
 void GameMgr::BlockPileSetting()
 {
-	int x = 400;
+	int x = 500;
 	int y = 1080 / 2 - 100;
 
 	for (auto& iter : m_BlockPile)
@@ -202,9 +215,9 @@ void GameMgr::BlockPileSetting()
 		x += 100;
 		iter->SetPosition(x, y);
 
-		if (x >= 1400)
+		if (x >= 1300)
 		{
-			x = 400;
+			x = 500;
 			y += 150;
 		}
 	}
