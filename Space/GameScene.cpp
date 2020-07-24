@@ -100,6 +100,7 @@ void GameScene::ImportBlock()
 				}
 				
 			}
+			iter->SetVisbleHand();
 			GameMgr::GetInst()->SetGamePhase(PHASE::BlockFit);
 		}
 	}

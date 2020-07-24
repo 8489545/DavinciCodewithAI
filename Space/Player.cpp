@@ -17,6 +17,17 @@ void Player::SetPlayer(int num, bool ai)
 	m_isFittingBlock = false;
 }
 
+void Player::SetVisbleHand()
+{
+	for (auto& iter : m_Hand)
+	{
+		BackBlock* block = new BackBlock();
+		block->BlockColor = iter->m_Color;
+		block->HandNum = iter->m_HandNum;
+		m_VisbleHand.push_back(block);
+	}
+}
+
 void Player::BlockDist()
 {
 	if (GameMgr::GetInst()->m_Turn == m_PlayerNum)
@@ -72,10 +83,17 @@ void Player::BlockFit()
 {
 	for (auto& iter : GameMgr::GetInst()->m_AllBlock)
 	{
-		if ((iter->m_Owner != m_PlayerNum && iter->m_Owner != 0) && iter->m_ActiveBlock && INPUT->GetButtonDown())
+		if (!m_isAI)
 		{
-			m_isFittingBlock = true;
-			ObjMgr->AddObject(new BlockFitPanel(iter, m_PlayerNum), "UI");
+			if ((iter->m_Owner != m_PlayerNum && iter->m_Owner != 0) && iter->m_ActiveBlock && INPUT->GetButtonDown())
+			{
+				m_isFittingBlock = true;
+				ObjMgr->AddObject(new BlockFitPanel(iter, m_PlayerNum), "UI");
+			}
+		}
+		else
+		{
+			BlockPrediction();
 		}
 	}
 }
@@ -92,6 +110,58 @@ void Player::BlockFitFailed()
 
 	GameMgr::GetInst()->NextTurn();
 	GameMgr::GetInst()->SetGamePhase(PHASE::ImportBlock);
+}
+
+void Player::BlockPrediction()
+{
+	m_StrangeBlock = GameMgr::GetInst()->m_AllBlock;
+
+	for (auto iter = m_StrangeBlock.begin(); iter != m_StrangeBlock.end();)
+	{
+		if ((*iter)->m_isRevealedBlock || (*iter)->m_Owner == m_PlayerNum)
+		{
+			iter = m_StrangeBlock.erase(iter);
+		}
+		else
+		{
+			++iter;
+		}
+	}
+	float ProbabilityFitting = 0;
+
+	for (int i = 1; i <= GameMgr::GetInst()->m_NumOfPlayer; i++)
+	{
+		if (i != m_PlayerNum)
+		{
+			int iterpos = 1;
+			for (const auto& iter : GameMgr::GetInst()->GetPlayer(i)->m_VisbleHand)
+			{
+				int frontnums = iterpos - 1;
+				int behindnums = GameMgr::GetInst()->GetPlayer(i)->m_VisbleHand.size() - iterpos;
+
+				int minnum = 13;
+				std::for_each(m_StrangeBlock.begin(), m_StrangeBlock.end(), [&minnum](Block* n)
+					{
+						if (n->m_HandNum <= minnum)
+							minnum = n->m_HandNum;
+					});
+
+				printf("%d \n", minnum);
+				int maxnum;
+
+				iterpos++;
+			}
+		}
+	}
+}
+
+bool Player::BlockCompare()
+{
+	return false;
+}
+
+void Player::ProbabilityCaculation()
+{
 }
 
 void Player::Update(float deltaTime, float Time)
