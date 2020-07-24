@@ -48,7 +48,7 @@ void Player::MoveJoker()
 	{
 		if (!m_isAI)
 		{
-			if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true && !iter->m_isJokerAlreadyMoved)
+			if (iter->m_BlockNumber == 12 && iter->m_ActiveBlock == true && !iter->m_isJokerAlreadyMoved && !iter->m_isRevealedBlock)
 			{
 				if (INPUT->GetButtonDown())
 				{
@@ -59,7 +59,7 @@ void Player::MoveJoker()
 		}
 		else
 		{
-			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved)
+			if (iter->m_BlockNumber == 12 && !iter->m_isJokerAlreadyMoved && !iter->m_isRevealedBlock)
 			{
 				iter->m_isJokerAlreadyMoved = true;
 				GameMgr::GetInst()->MoveJoker(m_PlayerNum, iter);
