@@ -172,7 +172,7 @@ void GameMgr::BlockHandSetting()
 		if (i == 0)
 			Pos = Vec2(600, 900);
 		else if (i == 1)
-			Pos = Vec2(1700, 700);
+			Pos = Vec2(1700, 1000);
 		for (auto& iter : GetPlayer(i)->m_Hand)
 		{
 			if (i == 0)
