@@ -11,9 +11,7 @@ enum class PHASE
 	ImportBlock,	//블록 가져오기
 	MoveJokerPos,	//가져온 조커의 위치 정하기
 	BlockFit,		//블록 맞추기
-	KeepFit,		//계속 맞추기
-	StopFit,		//그만 맞추기
-	TurnClock,		//순서 넘기기
+	SelectNextAct,	//맞춘후 행동 선택
 	NONE
 };
 constexpr int ALLBLOCK = 1;

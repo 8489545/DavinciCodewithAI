@@ -273,8 +273,7 @@ void GameMgr::MoveJoker(int owner, Block* block)
 void GameMgr::BlockFit(int owner)
 {
 	if (GetPlayer(owner - 1)->m_isFittingBlock == false)
-	{
-		//printf("%d \n", owner);
+	{ 
 		GetPlayer(owner - 1)->BlockFit();
 	}
 }

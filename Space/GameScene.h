@@ -6,6 +6,8 @@ class GameScene : public Scene
 	Sprite* m_Table;
 
 	Sprite* m_JokerPosCompleteButton;
+	Sprite* m_KeepFitButton;
+	Sprite* m_StopFitButton;
 public:
 	GameScene();
 	~GameScene();
@@ -20,6 +22,7 @@ public:
 	void ImportBlock();
 	void MoveJokerPos();
 	void BlockFit();
+	void NextAction();
 
 	void Update(float deltaTime, float Time);
 	void Render();

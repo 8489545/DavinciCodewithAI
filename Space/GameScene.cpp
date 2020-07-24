@@ -19,6 +19,12 @@ void GameScene::Init()
 	m_JokerPosCompleteButton = Sprite::Create(L"Painting/Game/UI/JokerPosCompleteButton.png");
 	m_JokerPosCompleteButton->SetPosition(1600, 900);
 
+	m_KeepFitButton = Sprite::Create(L"Painting/Game/UI/KeepFitButton.png");
+	m_KeepFitButton->SetPosition(150, 900);
+
+	m_StopFitButton = Sprite::Create(L"Painting/Game/UI/StopFitButton.png");
+	m_StopFitButton->SetPosition(400, 900);
+
 	GameMgr::GetInst()->BlockInitSetting();
 	GameMgr::GetInst()->SetGamePhase(PHASE::BlockDist);
 
@@ -122,7 +128,18 @@ void GameScene::MoveJokerPos()
 void GameScene::BlockFit()
 {
 	GameMgr::GetInst()->BlockFit(GameMgr::GetInst()->m_Turn);
-	//GameMgr::GetInst()->BlockFit(1);
+}
+
+void GameScene::NextAction()
+{
+	if (CollisionMgr::GetInst()->MouseWithBoxSize(m_KeepFitButton) && INPUT->GetButtonDown())
+	{
+		INPUT->ButtonDown(false);
+	}
+	else if (CollisionMgr::GetInst()->MouseWithBoxSize(m_KeepFitButton) && INPUT->GetButtonDown())
+	{
+		INPUT->ButtonDown(false);
+	}
 }
 
 void GameScene::Update(float deltaTime, float Time)
@@ -152,11 +169,9 @@ void GameScene::Update(float deltaTime, float Time)
 		TextUIMgr::GetInst()->InitText(PHASEUI, "블럭 맞추기");
 		BlockFit();
 		break;
-	case PHASE::KeepFit:
-		break;
-	case PHASE::StopFit:
-		break;
-	case PHASE::TurnClock:
+	case PHASE::SelectNextAct:
+		TextUIMgr::GetInst()->InitText(PHASEUI, "다음 행동 선택");
+		NextAction();
 		break;
 	case PHASE::NONE:
 		break;
@@ -174,4 +189,9 @@ void GameScene::Render()
 	{
 		m_JokerPosCompleteButton->Render();
 	}
+	//if (GameMgr::GetInst()->GetGamePhase() == PHASE::SelectNextAct)
+	//{
+		m_KeepFitButton->Render();
+		m_StopFitButton->Render();
+	//}
 }

@@ -82,6 +82,7 @@ void Player::BlockFit()
 
 void Player::BlockFitSuccess()
 {
+	GameMgr::GetInst()->SetGamePhase(PHASE::SelectNextAct);
 }
 
 void Player::BlockFitFailed()
