@@ -150,6 +150,7 @@ void GameMgr::BlockInHand(int playernum, Block* block)
 			{
 				return a->m_BlockNumber < b->m_BlockNumber;
 			}
+			return false;
 		});
 	BlockPileSetting();
 

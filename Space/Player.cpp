@@ -17,16 +17,6 @@ void Player::SetPlayer(int num, bool ai)
 	m_isFittingBlock = false;
 }
 
-void Player::SetVisbleHand()
-{
-	for (auto& iter : m_Hand)
-	{
-		BackBlock* block = new BackBlock();
-		block->BlockColor = iter->m_Color;
-		block->HandNum = iter->m_HandNum;
-		m_VisbleHand.push_back(block);
-	}
-}
 
 void Player::BlockDist()
 {
@@ -114,40 +104,19 @@ void Player::BlockFitFailed()
 
 void Player::BlockPrediction()
 {
-	m_StrangeBlock = GameMgr::GetInst()->m_AllBlock;
-
-	for (auto iter = m_StrangeBlock.begin(); iter != m_StrangeBlock.end();)
+	for(auto& i : GameMgr::GetInst()->m_Players)
 	{
-		if ((*iter)->m_isRevealedBlock || (*iter)->m_Owner == m_PlayerNum)
-		{
-			iter = m_StrangeBlock.erase(iter);
-		}
-		else
-		{
-			++iter;
-		}
-	}
-	float ProbabilityFitting = 0;
-
-	for (int i = 1; i <= GameMgr::GetInst()->m_NumOfPlayer; i++)
-	{
-		if (i != m_PlayerNum)
+		if (i->m_PlayerNum != m_PlayerNum)
 		{
 			int iterpos = 1;
-			for (const auto& iter : GameMgr::GetInst()->GetPlayer(i)->m_VisbleHand)
+
+			int BlackMin = 13;
+			int BlackMax = -1;
+			int WhiteMin = 13;
+			int WhiteMax = -1;
+			for (const auto& iter : GameMgr::GetInst()->GetPlayer(i->m_PlayerNum - 1)->m_Hand)
 			{
-				int frontnums = iterpos - 1;
-				int behindnums = GameMgr::GetInst()->GetPlayer(i)->m_VisbleHand.size() - iterpos;
 
-				int minnum = 13;
-				std::for_each(m_StrangeBlock.begin(), m_StrangeBlock.end(), [&minnum](Block* n)
-					{
-						if (n->m_HandNum <= minnum)
-							minnum = n->m_HandNum;
-					});
-
-				printf("%d \n", minnum);
-				int maxnum;
 
 				iterpos++;
 			}

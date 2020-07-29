@@ -4,13 +4,9 @@ struct ConjectureResult
 	int playernum;
 	int handnum;
 	int blocknum;
+	int percentage;
 	Color blockcolor;
 }Conjecture;
-struct BackBlock
-{
-	Color BlockColor;
-	int HandNum;
-};
 class Player : public Object
 {
 public:
@@ -22,8 +18,6 @@ public:
 	bool m_isFittingBlock;
 
 	std::vector<Block*> m_Hand;
-	std::vector<BackBlock*> m_VisbleHand;
-	std::vector<Block*> m_StrangeBlock;
 
 	std::list<ConjectureResult*> m_Results;
 
@@ -31,8 +25,7 @@ public:
 
 	void SetPlayer(int num, bool ai);
 
-	void SetVisbleHand();
-
+ 
 	void BlockDist();
 	void BlockInHand();
 	void MoveJoker();
