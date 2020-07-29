@@ -109,13 +109,44 @@ void Player::BlockPrediction()
 		if (i->m_PlayerNum != m_PlayerNum)
 		{
 			int iterpos = 1;
+			int blackcount = 0;
+			int whitecount = 0;
 
-			int BlackMin = 13;
-			int BlackMax = -1;
-			int WhiteMin = 13;
-			int WhiteMax = -1;
+			int BlackTotal = 0;
+			int WhiteTotal = 0;
 			for (const auto& iter : GameMgr::GetInst()->GetPlayer(i->m_PlayerNum - 1)->m_Hand)
 			{
+				if (iter->m_Color == Color::BLACK)
+				{
+					BlackTotal++;
+				}
+				else if (iter->m_Color == Color::WHITE)
+				{
+					WhiteTotal++;
+				}
+			}
+
+			int BlackMin = 0;
+			int BlackMax = 11;
+			int WhiteMin = 0;
+			int WhiteMax = 11;
+			for (const auto& iter : GameMgr::GetInst()->GetPlayer(i->m_PlayerNum - 1)->m_Hand)
+			{
+				ConjectureResult* Conject = new ConjectureResult();
+				Conject->handnum = iter->m_HandNum;
+				Conject->playernum = iter->m_Owner;
+				Conject->blockcolor = iter->m_Color;
+
+				if (iter->m_Color == Color::BLACK)
+				{
+					Conject->min = BlackMin + blackcount; 
+					Conject->max = BlackMax - (BlackTotal - blackcount);
+				}
+				else if (iter->m_Color == Color::WHITE)
+				{
+					Conject->min = WhiteMin + whitecount;
+					Conject->max = WhiteMax - (WhiteMax - whitecount);
+				}
 
 
 				iterpos++;

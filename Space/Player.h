@@ -1,12 +1,15 @@
 #pragma once
-struct ConjectureResult
+class ConjectureResult
 {
+public:
 	int playernum;
 	int handnum;
-	int blocknum;
+	int min;
+	int max;
 	int percentage;
+	int jokerpercentage;
 	Color blockcolor;
-}Conjecture;
+};
 class Player : public Object
 {
 public:
